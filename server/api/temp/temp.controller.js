@@ -11,11 +11,16 @@ var bus = w1bus.create();
 var probes = [];
 
 var updateProbeList = function(data){
-    //check if
-    console.log('updating probe lists')
-    console.log('data receieved');
-    console.log(data);
-    console.log('done---\n');
+
+    if(data.ids.length > 0) {
+        for(var i = 0; i < data.ids.length; i++ ){
+            console.log(data.ids[i]);
+        }
+    }
+    //console.log('updating probe lists')
+    //console.log('data receieved');
+    //console.log(data);
+    //console.log('done---\n');
 };
 
 setInterval(function(){
