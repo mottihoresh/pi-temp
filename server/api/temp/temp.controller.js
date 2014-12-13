@@ -24,7 +24,7 @@ var updateProbeList = function(data){
 var checkProbesValues = function(){
     if(probes.length>0) {
         _.forEach(probes, function(probe){
-            bus.getValueFrom(id, temperature)
+            bus.getValueFrom(probe, 'temperature')
                 .then(function(res){
                     em.emit('probe:reading', {'address':id, 'reading':res.result.value});
                 });
