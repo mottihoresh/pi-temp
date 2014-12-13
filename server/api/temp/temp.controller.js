@@ -26,7 +26,7 @@ bus.listAllSensors()
 
                 bus.getValueFrom(id, opt_measureType)
                     .then(function(res){
-                        console.log(id+": "+res.result.value);
+                        //console.log(id+": "+res.result.value);
                     });
             });
         },500);
