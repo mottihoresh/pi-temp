@@ -4,10 +4,30 @@ angular.module('tempMonitorApp')
     .controller('TempMonitorCtrl', function ($scope, $interval,$http, socket) {
         $scope.message = 'Hello';
 
-        $scope.sensors = [];
+        $scope.sensors = ['bla bla bla', 'bla bla bla'];
 
-        socket.on('hello-world', function(data){
-            console.log('awesome stuff, here\'s some data');
+        socket.on('probe:update-list', function(probes){
+            $scope.sensors = [];
+            _.forEach(probes, function(probe){
+                $scope.sensors.push({
+                    address:probe,
+                    reading:0
+                });
+            });
+        });
+
+        socket.on('probe:reading', function(reading){
+
+            var $something = _.find($scope.sensors, function(probe) {
+
+                if(probe.address == reading.address) {
+                    probe.reading = reading.reading;
+                }
+
+            });
+
+
+
         });
 
         $http.get('/api/temps').success(function(sensors) {
@@ -18,12 +38,5 @@ angular.module('tempMonitorApp')
         $scope.$on('$destroy', function () {
             socket.unsyncUpdates('temp');
         });
-
-        $interval(function(){
-            _.each($scope.sensors, function(sensor, index){
-                $scope.sensors[index].reading = Math.floor(Math.random()*100);
-            });
-
-        },1000);
 
     });

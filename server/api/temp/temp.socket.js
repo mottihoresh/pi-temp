@@ -25,11 +25,10 @@ exports.register = function (socket) {
     });
 
     tempController.on('probe:update-list',function(probes){
-        console.log('probe list has been updated');
+        socket.emit('probe:update-list', probes);
     });
     tempController.on('probe:reading', function(reading) {
-       console.log('got a reading');
-        console.log(reading);
+        socket.emit('probe:reading', reading);
     });
 };
 

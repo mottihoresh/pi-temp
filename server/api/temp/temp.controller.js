@@ -19,6 +19,7 @@ var updateProbeList = function(data){
         probes = data.ids;
         em.emit('probe:update-list', probes);
     }
+
 };
 
 var checkProbesValues = function(){
@@ -28,6 +29,9 @@ var checkProbesValues = function(){
                 .then(function(res){
                     em.emit('probe:reading', {'address':probe, 'reading':res.result.value});
                 });
+
+            //// debug stuff comment out on pi
+            //em.emit('probe:reading', {'address':probe, 'reading':Math.floor(Math.random()*100)});
         });
     }
 };
@@ -35,46 +39,19 @@ var checkProbesValues = function(){
 (function checkProbes(){
 
     setTimeout(function(){
+
         bus.listAllSensors()
             .then(updateProbeList);
+
+        //// debug code, since i'm not working on the pi right now
+        //probes = ['28-000003bb5c70'];
+        //em.emit('probe:update-list', probes);
 
         checkProbesValues();
 
         checkProbes();
     },1000);
 })();
-
-
-
-//bus.listAllSensors()
-//    .then(function(data){
-//        console.log('sensors?');
-//        console.log(data);
-//
-//        var mySensor = data.ids[0];
-//        var opt_measureType = "temperature";
-//
-//        setInterval(function(){
-//
-//            data.ids.forEach(function(id){
-//
-//                //console.log(id);
-//
-//                bus.getValueFrom(id, temperature)
-//                    .then(function(res){
-//                        //console.log(id+": "+res.result.value);
-//                    });
-//            });
-//        },500);
-//
-//    });
-//
-//setInterval(function(){
-//    em.emit('new-probe', {'address':'12x1351513'});
-//},5000);
-
-
-console.log(em);
 
 exports.on = function(event,cb){
     em.on(event,cb);
