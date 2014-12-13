@@ -31,7 +31,9 @@ var checkProbesValues = function(){
                 });
 
             //// debug stuff comment out on pi
-            //em.emit('probe:reading', {'address':probe, 'reading':Math.floor(Math.random()*100)});
+            //setTimeout(function(){
+            //    em.emit('probe:reading', {'address':probe, 'reading':Math.floor(Math.random()*100)});
+            //},100);
         });
     }
 };
@@ -44,8 +46,10 @@ var checkProbesValues = function(){
             .then(updateProbeList);
 
         //// debug code, since i'm not working on the pi right now
-        //probes = ['28-000003bb5c70'];
-        //em.emit('probe:update-list', probes);
+        //setTimeout(function(){
+        //    updateProbeList({ids:['28-000003bb5c70']});
+        //},300);
+
 
         checkProbesValues();
 

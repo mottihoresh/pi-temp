@@ -4,15 +4,31 @@ angular.module('tempMonitorApp')
     .controller('TempMonitorCtrl', function ($scope, $interval,$http, socket) {
         $scope.message = 'Hello';
 
-        $scope.sensors = ['bla bla bla', 'bla bla bla'];
+        $scope.sensors = [];
 
+        console.log($scope.sensors);
         socket.on('probe:update-list', function(probes){
-            $scope.sensors = [];
+
+            console.log('do nothing for now');
+
+            // first lets remove any probes that are no longer presnet
+            // in the new probes list
+
+            _.find($scope.sensors, function(sensor){
+                console.log(sensor);
+            });
+
             _.forEach(probes, function(probe){
-                $scope.sensors.push({
-                    address:probe,
-                    reading:0
-                });
+                // check if probe is not in the list, if it's not there
+                // then add it.
+                if(!_.find($scope.sensors, function(sensor){
+                    return sensor.address == probe;
+                })) {
+                    $scope.sensors.push({
+                        address:probe
+                    });
+                }
+
             });
         });
 
@@ -28,11 +44,6 @@ angular.module('tempMonitorApp')
 
 
 
-        });
-
-        $http.get('/api/temps').success(function(sensors) {
-            $scope.sensors = sensors;
-            socket.syncUpdates('temp', $scope.sensors);
         });
 
         $scope.$on('$destroy', function () {
