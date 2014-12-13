@@ -23,6 +23,14 @@ exports.register = function (socket) {
     tempController.on('new-probe', function(data){
         console.log(data);
     });
+
+    tempController.on('probe:update-list',function(probes){
+        console.log('probe list has been updated');
+    });
+    tempController.on('probe:reading', function(reading) {
+       console.log('got a reading');
+        console.log(reading);
+    });
 };
 
 function onSave(socket, doc, cb) {

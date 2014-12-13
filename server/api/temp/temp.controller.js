@@ -10,27 +10,40 @@ var w1bus = require('node-w1bus');
 var bus = w1bus.create();
 var probes = [];
 
+/**
+ * Update the probes array with the list of new arrays.
+ * @param data
+ */
 var updateProbeList = function(data){
-
     if(data.ids.length > 0) {
-
-        probes = _.union(probes,data.ids);
-        //for(var i = 0; i < data.ids.length; i++ ){
-        //    probesconsole.log(data.ids[i]);
-        //}
+        probes = data.ids;
+        em.emit('probe:update-list', probes);
     }
-
-    console.log(probes);
-    //console.log('updating probe lists')
-    //console.log('data receieved');
-    //console.log(data);
-    //console.log('done---\n');
 };
 
-setInterval(function(){
-    bus.listAllSensors()
-        .then(updateProbeList);
-},5000);
+var checkProbesValues = function(){
+    if(probes.length>0) {
+        _.forEach(probes, function(probe){
+            bus.getValueFrom(id, temperature)
+                .then(function(res){
+                    em.emit('probe:reading', {'address':id, 'reading':res.result.value});
+                });
+        });
+    }
+};
+
+(function checkProbes(){
+
+    setTimeout(function(){
+        console.log('test');
+        bus.listAllSensors()
+            .then(updateProbeList);
+
+        checkProbesValues();
+
+        checkProbes();
+    },1000);
+})();
 
 
 
@@ -48,7 +61,7 @@ bus.listAllSensors()
 
                 //console.log(id);
 
-                bus.getValueFrom(id, opt_measureType)
+                bus.getValueFrom(id, temperature)
                     .then(function(res){
                         //console.log(id+": "+res.result.value);
                     });
