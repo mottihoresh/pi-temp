@@ -13,10 +13,14 @@ var probes = [];
 var updateProbeList = function(data){
 
     if(data.ids.length > 0) {
-        for(var i = 0; i < data.ids.length; i++ ){
-            console.log(data.ids[i]);
-        }
+
+        probes = _.union(probes,data.ids);
+        //for(var i = 0; i < data.ids.length; i++ ){
+        //    probesconsole.log(data.ids[i]);
+        //}
     }
+
+    console.log(probes);
     //console.log('updating probe lists')
     //console.log('data receieved');
     //console.log(data);
