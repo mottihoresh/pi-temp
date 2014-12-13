@@ -26,7 +26,7 @@ var checkProbesValues = function(){
         _.forEach(probes, function(probe){
             bus.getValueFrom(probe, 'temperature')
                 .then(function(res){
-                    em.emit('probe:reading', {'address':id, 'reading':res.result.value});
+                    em.emit('probe:reading', {'address':probe, 'reading':res.result.value});
                 });
         });
     }
@@ -35,7 +35,6 @@ var checkProbesValues = function(){
 (function checkProbes(){
 
     setTimeout(function(){
-        console.log('test');
         bus.listAllSensors()
             .then(updateProbeList);
 
@@ -47,32 +46,32 @@ var checkProbesValues = function(){
 
 
 
-bus.listAllSensors()
-    .then(function(data){
-        console.log('sensors?');
-        console.log(data);
-
-        var mySensor = data.ids[0];
-        var opt_measureType = "temperature";
-
-        setInterval(function(){
-
-            data.ids.forEach(function(id){
-
-                //console.log(id);
-
-                bus.getValueFrom(id, temperature)
-                    .then(function(res){
-                        //console.log(id+": "+res.result.value);
-                    });
-            });
-        },500);
-
-    });
-
-setInterval(function(){
-    em.emit('new-probe', {'address':'12x1351513'});
-},5000);
+//bus.listAllSensors()
+//    .then(function(data){
+//        console.log('sensors?');
+//        console.log(data);
+//
+//        var mySensor = data.ids[0];
+//        var opt_measureType = "temperature";
+//
+//        setInterval(function(){
+//
+//            data.ids.forEach(function(id){
+//
+//                //console.log(id);
+//
+//                bus.getValueFrom(id, temperature)
+//                    .then(function(res){
+//                        //console.log(id+": "+res.result.value);
+//                    });
+//            });
+//        },500);
+//
+//    });
+//
+//setInterval(function(){
+//    em.emit('new-probe', {'address':'12x1351513'});
+//},5000);
 
 
 console.log(em);
