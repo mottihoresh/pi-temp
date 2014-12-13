@@ -10,6 +10,21 @@ var w1bus = require('node-w1bus');
 var bus = w1bus.create();
 var probes = [];
 
+var updateProbeList = function(data){
+    //check if
+    console.log('updating probe lists')
+    console.log('data receieved');
+    console.log(data);
+    console.log('done---\n');
+};
+
+setTimeInterval(function(){
+    bus.listAllSensors()
+        .then(updateProbeList);
+},5000);
+
+
+
 bus.listAllSensors()
     .then(function(data){
         console.log('sensors?');
@@ -22,7 +37,7 @@ bus.listAllSensors()
 
             data.ids.forEach(function(id){
 
-                console.log(id);
+                //console.log(id);
 
                 bus.getValueFrom(id, opt_measureType)
                     .then(function(res){
