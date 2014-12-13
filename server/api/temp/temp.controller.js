@@ -2,6 +2,47 @@
 
 var _ = require('lodash');
 var Temp = require('./temp.model');
+var events = require('events');
+var em = new events.EventEmitter();
+var w1bus = require('node-w1bus');
+
+// Some init code here
+var bus = w1bus.create();
+var probes = [];
+
+bus.listAllSensors()
+    .then(function(data){
+        console.log('sensors?');
+        console.log(data);
+
+        var mySensor = data.ids[0];
+        var opt_measureType = "temperature";
+
+        setInterval(function(){
+
+            data.ids.forEach(function(id){
+
+                console.log(id);
+
+                bus.getValueFrom(id, opt_measureType)
+                    .then(function(res){
+                        console.log(id+": "+res.result.value);
+                    });
+            });
+        },500);
+
+    });
+
+setInterval(function(){
+    em.emit('new-probe', {'address':'12x1351513'});
+},5000);
+
+
+console.log(em);
+
+exports.on = function(event,cb){
+    em.on(event,cb);
+};
 
 // Get list of temps
 exports.index = function(req, res) {
