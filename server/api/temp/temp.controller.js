@@ -18,7 +18,7 @@ var updateProbeList = function(data){
     console.log('done---\n');
 };
 
-setTimeInterval(function(){
+setInterval(function(){
     bus.listAllSensors()
         .then(updateProbeList);
 },5000);
