@@ -5,7 +5,7 @@ angular.module('tempMonitorApp')
         return {
             templateUrl: 'app/directives/temperatureBadge/temperatureBadge.html',
             restrict: 'EA',
-            scope: { sensor: '=temperatureBadge' },
+            scope: { sensor: '=temperatureBadge' }
             //link: function (scope, element, attrs) {
             //
             //    scope.$watch('sensor');
