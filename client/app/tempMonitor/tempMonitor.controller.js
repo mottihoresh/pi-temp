@@ -22,7 +22,7 @@ angular.module('tempMonitorApp')
                 // check if probe is not in the list, if it's not there
                 // then add it.
                 if(!_.find($scope.sensors, function(sensor){
-                    return sensor.address == probe;
+                    return sensor.address === probe;
                 })) {
                     $scope.sensors.push({
                         address:probe
@@ -34,13 +34,14 @@ angular.module('tempMonitorApp')
 
         socket.on('probe:reading', function(reading){
 
-            var $something = _.find($scope.sensors, function(probe) {
+            _.find($scope.sensors, function(probe) {
 
-                if(probe.address == reading.address) {
+                if(probe.address === reading.address) {
                     probe.reading = reading.reading;
                 }
 
             });
+
 
 
 
