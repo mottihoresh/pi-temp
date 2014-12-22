@@ -8,9 +8,7 @@ angular.module('tempMonitorApp')
             scope: { sensor: '=temperatureBadge' },
             link: function (scope, element, attrs) {
 
-                scope.$watch('sensor', function(walks) {
-                    //console.log(scope.sensor, walks);
-                });
+                scope.$watch('sensor');
 
             }
         };
