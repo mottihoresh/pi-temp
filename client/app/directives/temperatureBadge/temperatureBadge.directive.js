@@ -6,11 +6,11 @@ angular.module('tempMonitorApp')
             templateUrl: 'app/directives/temperatureBadge/temperatureBadge.html',
             restrict: 'EA',
             scope: { sensor: '=temperatureBadge' },
-            link: function (scope, element, attrs) {
-
-                scope.$watch('sensor');
-
-            }
+            //link: function (scope, element, attrs) {
+            //
+            //    scope.$watch('sensor');
+            //
+            //}
         };
     });
 
