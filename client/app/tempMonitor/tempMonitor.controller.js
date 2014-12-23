@@ -9,8 +9,6 @@ angular.module('tempMonitorApp')
         console.log($scope.sensors);
         socket.on('probe:update-list', function(probes){
 
-            console.log('do nothing for now');
-
             // first lets remove any probes that are no longer presnet
             // in the new probes list
 
@@ -41,10 +39,6 @@ angular.module('tempMonitorApp')
                 }
 
             });
-
-
-
-
         });
 
         $scope.$on('$destroy', function () {

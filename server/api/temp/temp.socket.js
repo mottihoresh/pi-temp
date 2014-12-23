@@ -16,10 +16,6 @@ exports.register = function (socket) {
         onRemove(socket, doc);
     });
 
-    setInterval(function(){
-        socket.emit('hello-world', 'pizza');
-    },2000);
-
     tempController.on('new-probe', function(data){
         console.log(data);
     });

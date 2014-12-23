@@ -27,7 +27,10 @@ var checkProbesValues = function(){
         _.forEach(probes, function(probe){
             bus.getValueFrom(probe, 'temperature')
                 .then(function(res){
-                    em.emit('probe:reading', {'address':probe, 'reading':res.result.value});
+                    em.emit('probe:reading', {
+                        'address':probe,
+                        'reading':res.result.value
+                    });
                 });
 
             //// debug stuff comment out on pi
@@ -49,7 +52,6 @@ var checkProbesValues = function(){
         //setTimeout(function(){
         //    updateProbeList({ids:['28-000003bb5c70']});
         //},300);
-
 
         checkProbesValues();
 

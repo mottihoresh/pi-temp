@@ -17,8 +17,9 @@
         </div>
     </div>
     <div class="row">
-
-        <div class="alert alert-danger" role="alert" ng-show="sensors.length < 1"><strong>Oh no!</strong> No Sensors Found</div>
+        <div class="alert alert-danger" role="alert" ng-show="sensors.length < 1">
+            <strong>Oh no!</strong> No Sensors Found
+        </div>
         <div data-ng-repeat="sensor in sensors" temperature-badge="sensor"></div>
     </div>
 </div>
