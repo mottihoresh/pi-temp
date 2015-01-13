@@ -29,12 +29,12 @@ angular.module('tempMonitorApp')
                     year: '%b'
                 },
                 title: {
-                    text: 'Date'
+                    text: 'Date/Time'
                 }
             },
             yAxis: {
                 title: {
-                    text: 'Snow depth (m)'
+                    text: 'Temperature'
                 },
                 min: 0
             },
@@ -61,12 +61,10 @@ angular.module('tempMonitorApp')
                         data: $scope.sensor.readings
                     });
 
-                    console.log(data);
                 }).
                 error(function (data, status, headers, config) {
                     // called asynchronously if an error occurs
                     // or server returns response with an error status.
-                    console.log('failure');
                 });
 
         }
@@ -74,11 +72,9 @@ angular.module('tempMonitorApp')
 
         socket.on('probe:reading', function(reading){
 
-            console.log(reading);
             if(reading.address == $scope.sensor.address) {
-                console.log('new reading: '+reading.reading);
-                console.log($scope.chartConfig.series[0]);
-                console.log($scope.chartConfig.series[0].data.push([Date.now(),reading.reading]));
+
+                $scope.chartConfig.series[0].data.push([Date.now(),reading.reading]);
             }
             //_.find($scope.sensors, function(probe) {
             //
