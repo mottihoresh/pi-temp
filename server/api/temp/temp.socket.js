@@ -4,7 +4,7 @@
 
 'use strict';
 
-var Temp = require('./temp.model');
+var Temp = require('./tempSensor.model');
 var tempController = require('./temp.controller.js');
 
 

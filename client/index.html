@@ -65,12 +65,16 @@
       <script src="socket.io-client/socket.io.js"></script>
     <!-- endbuild -->
 
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="bower_components/highcharts-ng/dist/highcharts-ng.min.js"></script>
+
         <!-- build:js({.tmp,client}) app/app.js -->
         <script src="app/app.js"></script>
           <!-- injector:js -->
           <script src="app/directives/temperatureBadge/temperatureBadge.directive.js"></script>
           <script src="app/tempMonitor/tempMonitor.controller.js"></script>
           <script src="app/tempMonitor/tempMonitor.js"></script>
+          <script src="app/tempMonitor/tempSensor.controller.js"></script>
           <script src="components/modal/modal.service.js"></script>
           <script src="components/navbar/navbar.controller.js"></script>
           <script src="components/socket/socket.service.js"></script>

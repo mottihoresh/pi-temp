@@ -1,0 +1,31 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+
+<header class="hero-unit" id="banner">
+    <div class="container">
+        <h1>Nodarium</h1>
+        <p class="lead">Temperature Sensing Demo</p>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Sensor Name: {{sensor.name}}</h1>
+            <h2>Sensor Address: {{sensor.address}} </h2>
+
+            <h3>Data: </h3>
+            <highchart id="chart1" config="chartConfig"></highchart>
+            {{sensor.readings.length}}
+        </div>
+    </div>
+</div>
+
+
+
+<footer class="footer">
+    <div class="container">
+        <p>Nodarium Temperature Sensor Demo |
+            <a href="https://twitter.com/mottihoresh">@mottihoresh</a> |
+            <a href="https://github.com/mottihoresh/pi-temp">GitHub</a></p>
+    </div>
+</footer>
