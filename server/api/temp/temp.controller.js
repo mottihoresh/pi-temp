@@ -48,6 +48,18 @@ var checkProbesValues = function () {
 
                     // Record Data.
                     //console.log(probe);
+                    var temperature = res.result.value;
+                    // Try to find probe
+
+
+                    TempSensor.findOne({address: probe},
+                        function (err, tempSensor) {
+
+                            if (!err) {
+                                tempSensor.readings.push({reading: temperature});
+                                tempSensor.save();
+                            }
+                        });
 
                     // Emit Data for other modules to use.
                     em.emit('probe:reading', {
@@ -57,26 +69,26 @@ var checkProbesValues = function () {
                 });
 
             // debug stuff comment out on pi
-            setTimeout(function () {
-
-                var temperature = Math.floor(Math.random() * 100);
-                // Try to find probe
-
-
-                TempSensor.findOne({address: probe},
-                    function (err, tempSensor) {
-
-                        if (!err) {
-                            tempSensor.readings.push({reading: temperature});
-                            tempSensor.save();
-                        }
-                    });
-
-                em.emit('probe:reading', {
-                    'address': probe,
-                    'reading': temperature
-                });
-            }, 100);
+            //setTimeout(function () {
+            //
+            //    var temperature = Math.floor(Math.random() * 100);
+            //    // Try to find probe
+            //
+            //
+            //    TempSensor.findOne({address: probe},
+            //        function (err, tempSensor) {
+            //
+            //            if (!err) {
+            //                tempSensor.readings.push({reading: temperature});
+            //                tempSensor.save();
+            //            }
+            //        });
+            //
+            //    em.emit('probe:reading', {
+            //        'address': probe,
+            //        'reading': temperature
+            //    });
+            //}, 100);
         });
     }
 };
@@ -90,9 +102,9 @@ var checkProbesValues = function () {
             .then(updateProbeList);
 
         // debug code, since i'm not working on the pi right now
-        setTimeout(function () {
-            updateProbeList({ids: ['28-000003bb5c70']});
-        }, 300);
+        //setTimeout(function () {
+        //    updateProbeList({ids: ['28-000003bb5c70']});
+        //}, 300);
 
         checkProbesValues();
 
