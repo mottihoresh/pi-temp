@@ -36,7 +36,6 @@ angular.module('tempMonitorApp')
                 title: {
                     text: 'Temperature'
                 },
-                min: 0
             },
             loading: false
         };
