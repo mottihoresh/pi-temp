@@ -18,6 +18,21 @@ angular.module('tempMonitorApp')
                     type: 'area',
                     zoomType: 'x',
                     animation: window.Highcharts.svg
+                },
+
+                plotOptions: {
+                    area: {
+                        marker: {
+                            enabled: false,
+                            symbol: 'circle',
+                            radius: 2,
+                            states: {
+                                hover: {
+                                    enabled: true
+                                }
+                            }
+                        }
+                    }
                 }
 
             },
