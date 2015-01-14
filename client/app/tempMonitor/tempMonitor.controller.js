@@ -35,7 +35,7 @@ angular.module('tempMonitorApp')
             _.find($scope.sensors, function(probe) {
 
                 if(probe.address === reading.address) {
-                    probe.reading = reading.reading;
+                    probe.reading = reading.reading * 5 / 9 + 32;
                 }
 
             });
