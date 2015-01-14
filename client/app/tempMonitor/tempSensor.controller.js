@@ -62,7 +62,7 @@ angular.module('tempMonitorApp')
 
                     _.forEach(data.readings, function(reading){
                         var tmpDate =  new Date(reading.createdAt);
-                        $scope.sensor.readings.push([tmpDate.getTime(),reading.reading]);
+                        $scope.sensor.readings.push([tmpDate.getTime(),reading.reading * 9 / 5 + 32]);
                     });
 
                     $scope.chartConfig.series.push({
@@ -79,7 +79,7 @@ angular.module('tempMonitorApp')
 
             if(reading.address === $scope.sensor.address) {
 
-                $scope.chartConfig.series[0].data.push([Date.now(),reading.reading]);
+                $scope.chartConfig.series[0].data.push([Date.now(),reading.reading * 9 / 5 + 32]);
             }
         });
 
