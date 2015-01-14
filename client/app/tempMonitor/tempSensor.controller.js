@@ -4,7 +4,7 @@
 angular.module('tempMonitorApp')
     .controller('TempSensorCtrl', function ($scope, $interval, $http, socket, $stateParams) {
 
-        Highcharts.setOptions({global: { useUTC: false } });
+        window.Highcharts.setOptions({global: { useUTC: false } });
 
 
         $scope.message = 'Hello';
@@ -13,11 +13,15 @@ angular.module('tempMonitorApp')
 
         $scope.chartConfig = {
             options: {
+
                 chart: {
-                    type: 'line',
-                    zoomType: 'x'
+                    type: 'area',
+                    zoomType: 'x',
+                    animation: window.Highcharts.svg
                 }
+
             },
+
             series: [],
             title: {
                 text: 'Hello'
@@ -35,15 +39,20 @@ angular.module('tempMonitorApp')
             yAxis: {
                 title: {
                     text: 'Temperature'
-                },
+                }
             },
             loading: false
         };
 
+
+
+
+
+
         if (!!$stateParams.probeAddress) {
             // try to grab the probe information
             $http.get('/api/temps/'+$stateParams.probeAddress)
-                .success(function (data, status, headers, config) {
+                .success(function (data) {
                     // this callback will be called asynchronously
                     // when the response is available
 
@@ -60,28 +69,18 @@ angular.module('tempMonitorApp')
                         data: $scope.sensor.readings
                     });
 
-                }).
-                error(function (data, status, headers, config) {
-                    // called asynchronously if an error occurs
-                    // or server returns response with an error status.
                 });
+
 
         }
 
 
         socket.on('probe:reading', function(reading){
 
-            if(reading.address == $scope.sensor.address) {
+            if(reading.address === $scope.sensor.address) {
 
                 $scope.chartConfig.series[0].data.push([Date.now(),reading.reading]);
             }
-            //_.find($scope.sensors, function(probe) {
-            //
-            //    if(probe.address === reading.address) {
-            //        probe.reading = reading.reading;
-            //    }
-            //
-            //});
         });
 
         $scope.$on('$destroy', function () {

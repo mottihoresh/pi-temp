@@ -2,9 +2,11 @@
 
 var _ = require('lodash');
 var TempSensor = require('./tempSensor.model');
+var TempReading = require('./sensorReading.model');
 var events = require('events');
 var em = new events.EventEmitter();
 var w1bus = require('node-w1bus');
+var moment = require('moment');
 
 // Some init code here
 var bus = w1bus.create();
@@ -49,17 +51,7 @@ var checkProbesValues = function () {
                     // Record Data.
                     //console.log(probe);
                     var temperature = res.result.value;
-                    // Try to find probe
-
-
-                    TempSensor.findOne({address: probe},
-                        function (err, tempSensor) {
-
-                            if (!err) {
-                                tempSensor.readings.push({reading: temperature});
-                                tempSensor.save();
-                            }
-                        });
+                    recordNewReading(probe, temperature);
 
                     // Emit Data for other modules to use.
                     em.emit('probe:reading', {
@@ -74,23 +66,77 @@ var checkProbesValues = function () {
             //    var temperature = Math.floor(Math.random() * 100);
             //    // Try to find probe
             //
+            //    //console.log('recodring data');
             //
-            //    TempSensor.findOne({address: probe},
-            //        function (err, tempSensor) {
-            //
-            //            if (!err) {
-            //                tempSensor.readings.push({reading: temperature});
-            //                tempSensor.save();
-            //            }
-            //        });
+            //    recordNewReading(probe, temperature);
             //
             //    em.emit('probe:reading', {
             //        'address': probe,
             //        'reading': temperature
             //    });
-            //}, 100);
+            //}, 5000);
+
+
         });
     }
+};
+
+var recordNewReading = function (probe, reading) {
+    //console.log('trying to record....', probe, reading);
+
+
+    // GET SENSOR INFO
+    TempSensor
+        .findOne({'address': probe})
+        .select('logInterval')
+        .exec(function (err, probeObj) {
+
+            if (!err) {
+                // GET LAST READING DATE
+                //console.log(probeObj);
+
+
+                // Record new reading.
+                //TempReading.create({reading:40, sensorId: probeObj._id},function(err,data){});
+
+                TempReading
+                    .findOne({sensorId: probeObj._id})
+                    .sort('-createdAt')
+                    .exec(function (err, data) {
+
+                        //
+                        //console.log('\n--------');
+                        //console.log(data);
+                        //console.log('last created:', new moment(data.createdAt).format());
+                        //console.log('now: ', new moment().format());
+                        //console.log('now: ', new moment().add(30, 's').format());
+
+                        if (data === null || moment().format() > moment(data.createdAt).add(30, 's').format()) {
+                            //console.log('new recording');
+                            TempReading.create({
+                                reading: reading,
+                                sensorId: probeObj._id
+                            }, function (err, data) {
+                            });
+
+                        }
+                        else {
+                            //console.log('not enough time has passed since last recording');
+                        }
+                        //console.log(err, data);
+                    });
+            }
+
+
+        });
+
+
+    //TempSensor.findOne(
+    //    {'address': probe},
+    //    ['logInterval'],
+    //    function(err,data){
+    //        console.log(err,data);
+    //    });
 };
 
 
@@ -107,9 +153,9 @@ var checkProbesValues = function () {
         //}, 300);
 
         checkProbesValues();
-
         checkProbes();
-    }, 1000);
+
+    }, 5000);
 })();
 
 exports.on = function (event, cb) {
@@ -128,15 +174,24 @@ exports.index = function (req, res) {
 
 // Get a single temp
 exports.show = function (req, res) {
-    TempSensor.findOne({address:req.params.address}, function (err, temp) {
+    TempSensor.findOne({address: req.params.address}, function (err, temp) {
         if (err) {
             return handleError(res, err);
         }
         if (!temp) {
             return res.send(404);
         }
-        temp.readings = temp.readings.slice(-100);
-        return res.json(temp);
+
+        var readings = {readings: []};
+
+        TempReading.find({sensorId: temp._id}).limit(100).exec(function (err, data) {
+            if (!err) {
+                readings.readings = data;
+            }
+            return res.json(_.merge(readings,temp._doc));
+        });
+
+
     });
 };
 

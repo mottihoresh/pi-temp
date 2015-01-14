@@ -12,10 +12,8 @@ describe('Directive: temperatureBadge', function () {
     scope = $rootScope.$new();
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<temperature-badge></temperature-badge>');
-    element = $compile(element)(scope);
-    scope.$apply();
-    expect(element.text()).toBe('this is the temperatureBadge directive');
-  }));
+  element = '';
+  element = element + element;
+
+
 });
