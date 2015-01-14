@@ -191,7 +191,7 @@ exports.show = function (req, res) {
             })
             .sort('-createdAt').exec(function (err, data) {
             if (!err) {
-                readings.readings = data;
+                readings.readings = data.reverse();
             }
             return res.json(_.merge(readings,temp._doc));
         });
