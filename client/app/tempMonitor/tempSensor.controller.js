@@ -16,13 +16,27 @@ angular.module('tempMonitorApp')
 
                 chart: {
                     type: 'area',
-                    //zoomType: 'x',
-                    animation: window.Highcharts.svg
+                    zoomType: 'x'
+                },
+
+                plotOptions: {
+                    area: {
+                        marker: {
+                            enabled: false,
+                            symbol: 'circle',
+                            radius: 2,
+                            states: {
+                                hover: {
+                                    enabled: true
+                                }
+                            }
+                        }
+                    }
                 }
 
-
-
             },
+
+            useHighStocks: true,
 
             series: [],
             title: {
