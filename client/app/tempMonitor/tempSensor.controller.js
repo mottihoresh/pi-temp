@@ -36,7 +36,7 @@ angular.module('tempMonitorApp')
 
             },
 
-            useHighStocks: true,
+            //useHighStocks: true,
 
             series: [],
             title: {
