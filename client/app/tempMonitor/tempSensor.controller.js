@@ -24,7 +24,7 @@ angular.module('tempMonitorApp')
 
             series: [],
             title: {
-                text: 'Hello'
+                text: '24 Hour History'
             },
             xAxis: {
                 type: 'datetime',

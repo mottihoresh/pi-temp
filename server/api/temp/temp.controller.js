@@ -184,7 +184,12 @@ exports.show = function (req, res) {
 
         var readings = {readings: []};
 
-        TempReading.find({sensorId: temp._id}).limit(100).exec(function (err, data) {
+        TempReading
+            .find({
+                sensorId: temp._id,
+                createdAt: {$gte: moment().subtract(24, 'h').format()}
+            })
+            .sort('-createdAt').exec(function (err, data) {
             if (!err) {
                 readings.readings = data;
             }
