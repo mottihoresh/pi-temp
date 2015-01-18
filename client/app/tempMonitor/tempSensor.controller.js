@@ -101,7 +101,7 @@ angular.module('tempMonitorApp')
                 x2Axis: {
                     tickFormat: function(d) {
                         var dx = $scope.nv3ChartData[0].values[d] && $scope.nv3ChartData[0].values[d].x || 0;
-                        return d3.time.format('%b-%Y')(new Date(dx))
+                        return d3.time.format('%H:%M')(new Date(dx))
                     },
                     showMaxMin: false
                 },
