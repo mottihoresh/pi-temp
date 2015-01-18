@@ -7,7 +7,9 @@ angular.module('tempMonitorApp', [
     'btford.socket-io',
     'ui.router',
     'ui.bootstrap',
+    'nvd3',
     'highcharts-ng'
+
 ])
     .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
         $urlRouterProvider
