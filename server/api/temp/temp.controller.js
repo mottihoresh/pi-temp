@@ -61,20 +61,20 @@ var checkProbesValues = function () {
                 });
 
             // debug stuff comment out on pi
-            setTimeout(function () {
-
-                var temperature = Math.floor(Math.random() * 100);
-                // Try to find probe
-
-                //console.log('recodring data');
-
-                recordNewReading(probe, temperature);
-
-                em.emit('probe:reading', {
-                    'address': probe,
-                    'reading': temperature
-                });
-            }, 5000);
+            //setTimeout(function () {
+            //
+            //    var temperature = Math.floor(Math.random() * 100);
+            //    // Try to find probe
+            //
+            //    //console.log('recodring data');
+            //
+            //    recordNewReading(probe, temperature);
+            //
+            //    em.emit('probe:reading', {
+            //        'address': probe,
+            //        'reading': temperature
+            //    });
+            //}, 5000);
 
 
         });
@@ -148,9 +148,9 @@ var recordNewReading = function (probe, reading) {
             .then(updateProbeList);
 
         // debug code, since i'm not working on the pi right now
-        setTimeout(function () {
-            updateProbeList({ids: ['28-000003bb5c70']});
-        }, 300);
+        //setTimeout(function () {
+        //    updateProbeList({ids: ['28-000003bb5c70']});
+        //}, 300);
 
         checkProbesValues();
         checkProbes();
