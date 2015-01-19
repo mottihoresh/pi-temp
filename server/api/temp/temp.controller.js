@@ -178,6 +178,7 @@ exports.index = function (req, res) {
 
 // Get a single temp
 exports.show = function (req, res) {
+    console.log('get readings: '+new Date());
     TempSensor.findOne({address: req.params.address}, function (err, temp) {
         if (err) {
             return handleError(res, err);
@@ -202,6 +203,8 @@ exports.show = function (req, res) {
 
 
     });
+
+    console.log('Got readings: '+new Date());
 };
 
 // Creates a new temp in the DB.

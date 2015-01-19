@@ -72,7 +72,7 @@ angular.module('tempMonitorApp')
 
         $scope.nv3ChartOptions = {
             chart: {
-                type: 'linePlusBarWithFocusChart',
+                type: 'lineWithFocusChart',
                 height: 500,
                 margin: {
                     top: 30,
