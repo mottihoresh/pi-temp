@@ -198,13 +198,15 @@ exports.show = function (req, res) {
             if (!err) {
                 readings.readings = data.reverse();
             }
+
+                console.log('Got readings: '+new Date());
             return res.json(_.merge(readings,temp._doc));
         });
 
 
     });
 
-    console.log('Got readings: '+new Date());
+
 };
 
 // Creates a new temp in the DB.
