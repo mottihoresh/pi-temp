@@ -18,9 +18,9 @@
             <nvd3 options="nv3ChartOptions" data="nv3ChartData" config="{refreshDataOnly: true}"></nvd3>
 
             <p><strong>Number of readings:</strong> {{sensor.readings.length}}</p>
-            <!--<ul>-->
-                <!--<li data-ng-repeat="reading in nv3ChartData">{{reading[0] | date:'medium'}}</li>-->
-            <!--</ul>-->
+            <ul>
+                <li data-ng-repeat="reading in nv3ChartData">{{reading[0] | date:'medium'}}</li>
+            </ul>
         </div>
     </div>
 </div>
